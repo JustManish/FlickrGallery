@@ -11,7 +11,7 @@ import UIKit
 
 class Constants {
 
-    static let api_key = "1d17f16a5ef7019c7fe490bf8958fb0b"
+    static let api_key = "e8d7558ecf33647875f6e21f16066f91"
     static let per_page = 60
     static let searchURL = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=\(Constants.api_key)&format=json&nojsoncallback=1&safe_search=1&per_page=\(Constants.per_page)&text=%@&page=%ld"
     

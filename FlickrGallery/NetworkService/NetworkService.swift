@@ -8,6 +8,12 @@
 import Foundation
 import UIKit
 
+enum ImageLoadingError: Error {
+    case networkFailure(Error)
+    case invalidData
+    case NetworkUnavailable
+}
+
 class NetworkService {
     
     
@@ -15,62 +21,49 @@ class NetworkService {
         return NetworkService()
     }()
     
-    static let errorMessage = "Something went wrong, Please try again later"
-    static let noInternetConnection = "Please check your Internet connection and try again."
-    
-    func request(_ request: HttpRequest, completion: @escaping (Result<Data>) -> Void) {
+    func request(_ request: HttpRequest, completion: @escaping (Result<Data,Error>) -> Void) {
         
-        guard (Reachability.currentReachabilityStatus != .notReachable) else {
-            return completion(.Failure(NetworkService.noInternetConnection))
-        }
-        
-        URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) in
+        URLSession.shared.dataTask(with: request as URLRequest) { result in
+            switch result{
             
-            guard error == nil else {
-                return completion(.Failure(error!.localizedDescription))
-            }
-            
-            guard let data = data else {
-                return completion(.Failure(error?.localizedDescription ?? NetworkService.errorMessage))
-            }
-            
-            guard let stringResponse = String(data: data, encoding: String.Encoding.utf8) else {
-                return completion(.Failure(error?.localizedDescription ?? NetworkService.errorMessage))
-            }
-            
-            print("Respone: \(stringResponse)")
-            
-            return completion(.Success(data))
-            
+            case .success(let data) :
+                completion(.success(data))
+                
+            case .failure(let error) :
+                completion(.failure(error))
+           }
         }.resume()
     }
+        
+        
+        
     
-    func downloadImageFrom(_ urlString: String, completion: @escaping (Result<UIImage>) -> Void) {
+    func downloadImageFrom(_ urlString: String, completion: @escaping (Result<UIImage,ImageLoadingError>) -> Void) {
         
         let sessionConfig = URLSessionConfiguration.default
         let session = URLSession(configuration: sessionConfig)
         
         guard let url =  URL(string: urlString) else {
-            return completion(.Failure(NetworkService.errorMessage))
+            return completion(.failure(.invalidData))
         }
         
         guard (Reachability.currentReachabilityStatus != .notReachable) else {
-            return completion(.Failure(NetworkService.noInternetConnection))
+            return completion(.failure(.NetworkUnavailable))
         }
         
         session.downloadTask(with: url) { (url, reponse, error) in
             do {
                 guard let url = url else {
-                    return completion(.Failure(NetworkService.errorMessage))
+                    return completion(.failure(.invalidData))
                 }
                 let data = try Data(contentsOf: url)
                 if let image = UIImage(data: data) {
-                    return completion(.Success(image))
+                    return completion(.success(image))
                 } else {
-                    return completion(.Failure(NetworkService.errorMessage))
+                    return completion(.failure(.networkFailure(error!)))
                 }
             } catch {
-                return completion(.Error(NetworkService.errorMessage))
+                return completion(.failure(.networkFailure(error)))
             }
         }.resume()
         

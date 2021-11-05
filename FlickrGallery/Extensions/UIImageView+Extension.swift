@@ -17,7 +17,7 @@ extension UIImageView {
                 
                 DispatchQueue.main.async {
                     switch result {
-                    case .Success(let image):
+                    case .success(let image):
                         
                         self.image = image
                     default:

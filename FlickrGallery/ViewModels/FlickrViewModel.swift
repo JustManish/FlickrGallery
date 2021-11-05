@@ -25,31 +25,29 @@ class FlickrViewModel {
     
     var eventNotifierDelegate : EventNotifierDelegate?
     
-    func request(_ searchText: String, pageNo: Int, completion: @escaping (Result<Photos?>) -> Void) {
+    func request(_ searchText: String, pageNo: Int, completion: @escaping (Result<Photos?, Error>) -> Void) {
         
         guard let request = FlickrRequestConfig.searchRequest(searchText, pageNo).value else {
             return
         }
         
-        NetworkService.shared.request(request) { (result) in
-            switch result {
-            case .Success(let responseData):
-                if let model = self.processResponse(responseData) {
+        NetworkService.shared.request(request) { result in
+            switch result{
+            
+            case .success(let data) :
+                if let model = self.processResponse(data) {
                     if let stat = model.stat, stat.uppercased().contains("OK") {
-                        return completion(.Success(model.photos))
-                    } else {
-                        return completion(.Failure(NetworkService.errorMessage))
+                        return completion(.success(model.photos))
                     }
-                } else {
-                    return completion(.Failure(NetworkService.errorMessage))
                 }
-            case .Failure(let message):
-                return completion(.Failure(message))
-            case .Error(let error):
-                return completion(.Failure(error))
+                
+            case .failure(let error) :
+                return completion(.failure(error))
             }
         }
     }
+    
+    
     
     func processResponse(_ data: Data) -> FlickrResponse? {
         do {
@@ -77,20 +75,15 @@ class FlickrViewModel {
             
             DispatchQueue.main.async {
                 switch result {
-                case .Success(let results):
+                case .success(let results):
                     if let result = results {
                         self.totalPageNo = result.pages
                         self.photoArray.append(contentsOf: result.photo)
                         self.eventNotifierDelegate?.notifyUpdate()
                     }
                     completion()
-                case .Failure(let message):
-                    self.eventNotifierDelegate?.showAlertMessage(message: message)
-                    completion()
-                case .Error(let error):
-                    if self.pageNo > 1 {
-                        self.eventNotifierDelegate?.showAlertMessage(message: error)
-                    }
+                case .failure(let error):
+                    self.eventNotifierDelegate?.showAlertMessage(message: error.localizedDescription)
                     completion()
                 }
             }

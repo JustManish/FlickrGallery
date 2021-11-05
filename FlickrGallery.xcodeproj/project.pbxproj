@@ -39,6 +39,7 @@
 		DF1DFAD12732A44C0052BF43 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1DFAD02732A44C0052BF43 /* UIViewController+Extension.swift */; };
 		DF1DFAD32732A5690052BF43 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1DFAD22732A5690052BF43 /* UIImageView+Extension.swift */; };
 		DF1DFAD52732A8E50052BF43 /* FlickrData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1DFAD42732A8E50052BF43 /* FlickrData.swift */; };
+		DF6F231B2734D697002837FB /* URLSession+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6F231A2734D697002837FB /* URLSession+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		DF1DFAD02732A44C0052BF43 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		DF1DFAD22732A5690052BF43 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		DF1DFAD42732A8E50052BF43 /* FlickrData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrData.swift; sourceTree = "<group>"; };
+		DF6F231A2734D697002837FB /* URLSession+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,6 +231,7 @@
 			children = (
 				DF1DFAD02732A44C0052BF43 /* UIViewController+Extension.swift */,
 				DF1DFAD22732A5690052BF43 /* UIImageView+Extension.swift */,
+				DF6F231A2734D697002837FB /* URLSession+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -396,6 +399,7 @@
 				DF1DFAC7273292A60052BF43 /* Constant.swift in Sources */,
 				DF1DFAB827328A6E0052BF43 /* HttpRequest.swift in Sources */,
 				DF1DFAC527328FD70052BF43 /* ImageCollectionViewCell.swift in Sources */,
+				DF6F231B2734D697002837FB /* URLSession+Extension.swift in Sources */,
 				DF1DFABC27328AF00052BF43 /* Reachability.swift in Sources */,
 				DF1DFAD52732A8E50052BF43 /* FlickrData.swift in Sources */,
 				DF1DFAAC2732880F0052BF43 /* FlickrViewModel.swift in Sources */,
