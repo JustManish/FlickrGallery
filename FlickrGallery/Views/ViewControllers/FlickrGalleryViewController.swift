@@ -45,6 +45,7 @@ class FlickrGalleryViewController: UIViewController {
 
 }
 
+//Mark :- EventNotifierDelegate
 extension FlickrGalleryViewController : EventNotifierDelegate{
     func showAlertMessage(message: String) {
         self.showAlert(message: message)
@@ -124,7 +125,7 @@ extension FlickrGalleryViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-
+//Mark :- UICollectionViewDelegate
 extension FlickrGalleryViewController : UICollectionViewDelegate{
     
     
