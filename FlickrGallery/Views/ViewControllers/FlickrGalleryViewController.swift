@@ -125,6 +125,7 @@ extension FlickrGalleryViewController: UICollectionViewDelegateFlowLayout {
 }
 
 
+//Mark :- UICollectionViewDelegate
 extension FlickrGalleryViewController : UICollectionViewDelegate{
     
     

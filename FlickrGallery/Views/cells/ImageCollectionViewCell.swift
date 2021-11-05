@@ -29,7 +29,6 @@ class ImageCollectionViewCell: UICollectionViewCell {
         didSet {
             if let data = data {
                 titleLabel.text = data.title
-                imageView.image = UIImage(named: "placeholder")
                 imageView.downloadImage(data.imageURL)
             }
         }
